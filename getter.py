@@ -15,9 +15,9 @@ workingDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #check if there is a wallpaper folder and saved urls 
 def check_directory():
     if "backgrounds" not in os.listdir(workingDir):
-        os.mkdir(workingDir+"\\backgrounds")   
+        os.mkdir(os.path.join(workingDir,'backgrounds'))   
     if "downloaded.txt" not in os.listdir(workingDir):
-        f = open("downloaded.txt","a+")
+        f = open(os.path.join(workingDir,'downloaded.txt'),"a+")
         f.close()
 
 
@@ -93,7 +93,7 @@ def log_url(url):
 def retrieve_downloaded():
     temp =[]
     
-    with open(workingDir + "\downloaded.txt","r+") as d:
+    with open(os.path.join(workingDir,'downloaded.txt',"r+") as d:
         for line in d:
             line = line.strip()
             temp.append(line)
