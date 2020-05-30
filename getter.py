@@ -3,12 +3,13 @@ import json
 import os
 import sys
 from PIL import Image
+from PIL import UnidentifiedImageError
 from io import BytesIO
 import time
 import random
 
 #working directory where you want to store your wallpapers
-workingDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+workingDir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),'wallpaperGetter')
 
 
 
@@ -40,7 +41,7 @@ def return_format(url):
 
 #clean title of bad characters
 def clean_title(title):
-    invalidChars = ["\"","?","!",".","@","|",","]
+    invalidChars = ["\"","?","!",".","@","|",",","*"]
     newString = []
     for letter in title:
         if letter == " ":
@@ -48,8 +49,7 @@ def clean_title(title):
 
         elif letter not in invalidChars:
             newString.append(letter)
-    if len(newString) > 20:
-        return "".join(newString[-20:len(newString)-1:])
+
     return "".join(newString)
 
 #check if already downloaded
@@ -81,11 +81,15 @@ def extract_data(inputDict,raw):
 #return Image object
 def download_pic(url):
     resp = requests.get(url)
-    return Image.open(BytesIO(resp.content))
+    try:
+        return Image.open(BytesIO(resp.content))
+    except UnidentifiedImageError:
+        print("invalid image")
+        return None
 
 #write url for no repeats
 def log_url(url):
-    with open(workingDir + "\downloaded.txt","a+") as d:
+    with open(os.path.join(workingDir,'downloaded.txt'),"a+") as d:
         d.write(url+"\n")
 
 
@@ -93,7 +97,7 @@ def log_url(url):
 def retrieve_downloaded():
     temp =[]
     
-    with open(os.path.join(workingDir,'downloaded.txt',"r+") as d:
+    with open(os.path.join(workingDir,'downloaded.txt'),"r+") as d:
         for line in d:
             line = line.strip()
             temp.append(line)
@@ -160,7 +164,9 @@ if __name__ == "__main__":
         if is_unique(url):
             print(title)
             log_url(url)
-            image = download_pic(url) 
-            image.save(workingDir + "\\backgrounds/{}.{}".format(title,return_format(url)),format=return_format(url))
+
+            image = download_pic(url)
+            if image is not None: 
+                image.save(workingDir + "\\backgrounds\\{}.{}".format(title,return_format(url)),format=return_format(url))
     
 
