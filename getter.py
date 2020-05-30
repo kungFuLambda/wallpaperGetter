@@ -8,7 +8,7 @@ import time
 import random
 
 #working directory where you want to store your wallpapers
-workingDir = "G:\SHARED\projects\wallpaperGetter"
+workingDir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 
