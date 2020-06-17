@@ -1,6 +1,6 @@
 # wallpaperGetter
 
-##wallpaper getter, build with python
+## wallpaper getter, built with python
 
 Gets wallpapers from reddit wallpaper sub, downloads them into backgrounds folder.
 
