@@ -133,7 +133,7 @@ if __name__ == "__main__":
 
         if sys.argv[1] == "set":
             wallpapers = os.listdir("backgrounds")
-            wall = wallpapers[random.randint(0,len(wallpapers))]
+            wall = wallpapers[random.randint(0,len(wallpapers)-1)]
 
             path = os.path.join(os.path.abspath("."),"backgrounds",wall)
 
