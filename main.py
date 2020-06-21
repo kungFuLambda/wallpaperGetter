@@ -134,9 +134,7 @@ if __name__ == "__main__":
         if sys.argv[1] == "set":
             wallpapers = os.listdir("backgrounds")
             wall = wallpapers[random.randint(0,len(wallpapers)-1)]
-
             path = os.path.join(os.path.abspath("."),"backgrounds",wall)
-
             os.system("gsettings set org.gnome.desktop.background picture-uri file:'{}'".format(path))
             sys.exit()
     #get input and check dirs
@@ -167,6 +165,7 @@ if __name__ == "__main__":
 
             image = download_pic(url)
             if image is not None: 
-                image.save(workingDir + "\\backgrounds\\{}.{}".format(title,return_format(url)),format=return_format(url))
+                print("saving...")
+                image.save(workingDir + "/backgrounds/{}.{}".format(title,return_format(url)),format=return_format(url))
     
 
